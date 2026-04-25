@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model admin {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique(map: "username") @db.VarChar(255)
+  email     String?   @unique(map: "email") @db.VarChar(255)
+  password  String    @db.VarChar(255)
+  role      String?   @default("admin") @db.VarChar(50)
+  name      String?   @db.VarChar(255)
+  createdAt DateTime? @default(now()) @db.DateTime(0)
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  email        String   @unique
+  password     String
+  name         String?
+  phone        String?
+  nationalId   String   @unique
+  region       String?
+  city         String?
+  jobTitle     String?
+  organization String?
+  role         String   @default("participant") // participant, TEAM_LEADER
+  status       String?  @default("pending")
+  createdAt    DateTime @default(now())
+  
+ 
+  teamId       Int?
+  team         team?    @relation(fields: [teamId], references: [id])
+ 
+  enrollments CourseEnrollment[]
+}
+
+model team {
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  leader_name  String
+  email        String   @unique
+  phone        String?
+  region       String?
+  city         String?
+  nationalId   String?
+  job          String?
+  organization String?
+  attachments  String?
+  password     String   
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+  
+  
+  leaderId     Int?     @unique
+  
+  users        User[]
+}
+
+model Trainer {
+  id        String   @id @default(cuid())
+  name      String
+  specialty String?
+  email     String?
+  bio       String?  @db.Text
+  courses   Course[] 
+  createdAt DateTime @default(now())
+}
+
+model Course {
+  id             Int      @id @default(autoincrement())
+  title          String   
+  description    String?  @db.Text
+  thumbnail      String?  
+  videoUrl       String? 
+  content        String?  @db.Text
+  duration       String? 
+  category       String?
+  volunteerHours Int      @default(0)
+  status         String   @default("active") // active, draft
+  instructorName String? 
+  durationHours  Int?     
+  image          String?  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  trainerId      String?
+  trainer        Trainer? @relation(fields: [trainerId], references: [id])
+
+  enrollments CourseEnrollment[]
+  
+ 
+  certTemplate  String? 
+}
+
+model CourseEnrollment {
+  id          Int       @id @default(autoincrement())
+  userId      Int      
+  courseId    Int      
+  status      String    @default("in_progress") // in_progress, completed
+  enrolledAt  DateTime  @default(now())
+  completedAt DateTime?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId]) 
+}
+
+model SupportTicket {
+  id          Int       @id @default(autoincrement())
+  userId      Int?      // ربط التذكرة بمستخدم مسجل (اختياري)
+  senderName  String    @db.VarChar(255)
+  senderEmail String    @db.VarChar(255)
+  subject     String    @db.VarChar(255)
+  message     String    @db.Text
+  status      String    @default("new") // new, in_progress, resolved
+  reply       String?   @db.Text
+  repliedBy   String?   @db.VarChar(255)
+  repliedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model settings {
+  id                        Int      @id @default(1)
+  allow_member_registration Boolean  @default(true)
+  allow_team_registration   Boolean  @default(true)
+  updated_at                DateTime @updatedAt
+}

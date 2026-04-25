@@ -1,0 +1,26 @@
+# Production Database Configuration
+# Please update your .env file with these values
+
+# Database URL format for MySQL:
+# DATABASE_URL="mysql://username:password@host:port/database_name"
+
+# Database URL format for PostgreSQL:
+# DATABASE_URL="postgresql://username:password@host:port/database_name"
+
+# Common production configurations:
+# MySQL Example:
+# DATABASE_URL="mysql://volunteer_user:your_password@localhost:3306/volunteer_db"
+
+# PostgreSQL Example:
+# DATABASE_URL="postgresql://volunteer_user:your_password@localhost:5432/volunteer_db"
+
+# Replace with your actual production database credentials:
+# - username: Your database username
+# - password: Your database password  
+# - host: Your database host (localhost or remote server)
+# - port: Database port (3306 for MySQL, 5432 for PostgreSQL)
+# - database_name: Your production database name
+
+# Next.js Configuration
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret-key-here"
