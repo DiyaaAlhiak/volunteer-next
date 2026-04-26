@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import About from "@/components/About";
+
 import JoiningJourney from "@/components/JoiningJourney";
 import Stats from "@/components/Stats";
 import Objectives from "@/components/Objectives";
@@ -14,23 +14,27 @@ export default function Home() {
     <div className="min-h-screen" dir="rtl">
       <Header 
         title="سفراء التطوع الصحي"
-        description=""
         showButton={true}
-        buttonText="سجل الان"
+        description="انطلاقاً من أدوار مركز التطوع الصحي وأهدافه الاستراتيجية الرامية إلى تنظيم التطوع في المجال الصحي، وتمكين منظومة التطوع الصحي،يأتي مشروع سفراء التطوع الصحي متمماً للجهود التي بذلها مركز التطوع الصحي في هذا المجال، فبعد استكمال تأهيل وتدريب المتطوعين الصحيين، وتأسيس وحدات تطوعية صحية في الجهات الصحية الحكومية وغير الربحية، أصبح من الضروري، إيجاد متطوعين صحيين على قدرٍ متقدم من التأهيل للتعامل مع الأزمات والكوارث الصحية."
       />
       
      
   
       
       <main className="bg-white">
-        <About />
+       
         <Objectives />
         <Stats />
         <JoiningJourney />
         <Rules />
         <FAQ />
         
-        {/* Registration Section */}
+
+
+        <ContactForm />
+
+
+                {/* Registration Section */}
         <section className="py-20 bg-gradient-to-br from-emerald-50 to-teal-50">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -91,8 +95,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        <ContactForm />
       </main>
       <FloatingContact />
     </div>

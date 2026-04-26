@@ -96,19 +96,7 @@ export default function AdminDashboardPage() {
           {/* يمكنك وضع جدول مصغر هنا لاحقاً */}
         </div>
         
-        <div className="bg-[#0f172b] p-6 rounded-2xl shadow-sm text-white">
-          <h3 className="text-lg font-bold mb-4">حالة النظام</h3>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center text-sm border-b border-white/10 pb-2">
-              <span>تواصل السيرفر</span>
-              <span className="text-emerald-400">مستقر</span>
-            </div>
-            <div className="flex justify-between items-center text-sm border-b border-white/10 pb-2">
-              <span>آخر تحديث تلقائي</span>
-              <span>منذ دقيقة واحدة</span>
-            </div>
-          </div>
-        </div>
+  
       </div>
     </div>
   );

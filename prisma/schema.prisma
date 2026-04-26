@@ -133,3 +133,12 @@ model settings {
   allow_team_registration   Boolean  @default(true)
   updated_at                DateTime @updatedAt
 }
+
+
+model CertificateTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  filePath    String   
+  isActive    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}

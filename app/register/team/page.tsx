@@ -6,7 +6,7 @@ export default async function TeamRegistration() {
   const isTeamRegistrationEnabled = true;
 
   return (
-    <div className="min-h-screen bg-[#0f172b] text-white" dir="rtl">
+    <div className="min-h-screen text-white" dir="rtl">
       <Header 
         title="تسجيل فريق جديد"
         description="املأ النموذج أدناه لتسجيل فريقك في مبادرات التطوع"
