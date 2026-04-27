@@ -12,11 +12,20 @@ export async function registerTeamAction(formData: FormData) {
   let isSuccess = false;
 
   try {
-    // 1. استخراج البيانات الأساسية وضمان وجود قيم افتراضية لمنع أخطاء Prisma
+    // 1. استخراج كلمات المرور أولاً للتحقق منها
+    const password = (formData.get('password') || "") as string;
+    const confirmPassword = (formData.get('confirm_password') || "") as string;
+
+    // --- التحقق من تطابق كلمات المرور ---
+    if (!password || password !== confirmPassword) {
+      return { error: "كلمتا المرور غير متطابقتين، يرجى التأكد والمحاولة مرة أخرى." };
+    }
+    // ----------------------------------
+
+    // 2. استخراج بقية البيانات الأساسية
     const leaderName = (formData.get('leader_name') || formData.get('leaderName') || "") as string;
     const teamName = (formData.get('name') || "") as string;
     const email = (formData.get('email') || "") as string;
-    const password = (formData.get('password') || "") as string;
     const phone = (formData.get('phone') || "") as string;
     const nationalId = (formData.get('nationalId') || "") as string;
     const region = (formData.get('region') || "") as string;
@@ -25,7 +34,7 @@ export async function registerTeamAction(formData: FormData) {
     const file = formData.get('attachments') as File;
     let filePath = '';
 
-    // 2. معالجة رفع الملف (المرفقات)
+    // 3. معالجة رفع الملف (المرفقات)
     if (file && file.size > 0) {
       const uploadDir = path.join(process.cwd(), 'public', 'uploads');
       if (!existsSync(uploadDir)) {
@@ -36,10 +45,10 @@ export async function registerTeamAction(formData: FormData) {
       await writeFile(path.join(uploadDir, fileName), Buffer.from(await file.arrayBuffer()));
     }
 
-    // 3. تشفير كلمة المرور
+    // 4. تشفير كلمة المرور (نستخدم المتغير password الذي تأكدنا منه)
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 4. تنفيذ العملية داخل Transaction لضمان الترابط
+    // 5. تنفيذ العملية داخل Transaction لضمان الترابط
     await prisma.$transaction(async (tx) => {
       
       // أ- إنشاء حساب القائد في جدول User أولاً
@@ -75,7 +84,6 @@ export async function registerTeamAction(formData: FormData) {
           organization: (formData.get('organization') as string) || "",
           attachments: filePath,
           status: 'pending',
-          // الربط باستخدام معرف المستخدم الذي أُنشئ للتو
           leaderId: leader.id, 
         },
       });
@@ -92,7 +100,6 @@ export async function registerTeamAction(formData: FormData) {
   } catch (error: any) {
     console.error("=== خطأ في تسجيل الفريق ===", error);
     
-    // معالجة الأخطاء الشائعة (تكرار البيانات)
     if (error.code === 'P2002') {
       return { error: "اسم الفريق، البريد الإلكتروني، أو رقم الهوية مسجل مسبقاً" };
     }
@@ -100,9 +107,9 @@ export async function registerTeamAction(formData: FormData) {
     return { error: "فشل في تسجيل البيانات: " + error.message };
   }
 
-  // 5. التوجيه بعد النجاح (خارج نطاق الـ try/catch)
+  // 6. التوجيه بعد النجاح
   if (isSuccess) {
     revalidatePath('/');
-    redirect('/participant-dashboard'); 
+    redirect('/'); 
   }
 }

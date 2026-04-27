@@ -83,7 +83,7 @@ export default async function MemberRegistration() {
             </p>
           </div>
         ) : (
-          <div className="bg-white rounded-[2rem] shadow-2xl shadow-slate-200/50 p-8 sm:p-12 border border-gray-100">
+          <div className="  ">
             {/* عنوان داخلي للفورم لمزيد من الوضوح */}
             <div className="mb-10 pb-6 border-b border-gray-50 text-center lg:text-right">
                 <h2 className="text-2xl font-bold text-[#34bca3]">نموذج الانضمام</h2>

@@ -29,7 +29,16 @@ export default function LoginPage() {
   return (
     <div dir="rtl" className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative h-64 bg-gradient-to-r from-blue-600 to-blue-800 flex items-center justify-center">
+      <div className="relative h-64 bg-gradient-to-r from-blue-600 to-blue-800 flex items-center justify-center"
+style={{ 
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://pioneerseg.ddns.net:6901/assets/uploads/media-uploader/large-untitled1689293283.png')`,
+    // هذه الخصائص تضمن عدم التكرار وتغطية المساحة بالكامل
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    height: '30rem',
+  }}
+      >
         <div className="text-center">
           <h1 className="text-4xl font-bold text-white mb-4">تسجيل الدخول</h1>
           <div className="text-white text-sm">
@@ -41,7 +50,7 @@ export default function LoginPage() {
       </div>
 
       {/* Login Card */}
-      <div className="flex items-center justify-center px-4 mt-16!">
+      <div className="flex items-center justify-center px-4 mt-16! mb-16">
         <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
           <h2 className="text-2xl font-bold text-gray-900 text-center mb-6">
         تسجيل الدخول كمشارك 
@@ -51,7 +60,7 @@ export default function LoginPage() {
             {/* Username Field */}
             <div>
               <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
-                Username
+                اسم المستخدم / البريد الالكتروني
               </label>
               <input
                 id="username"
@@ -66,7 +75,7 @@ export default function LoginPage() {
             {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Password
+                كلمت السر 
               </label>
               <input
                 id="password"
@@ -80,23 +89,7 @@ export default function LoginPage() {
 
 
 
-            {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember"
-                  name="remember"
-                  type="checkbox"
-                  className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
-                />
-                <label htmlFor="remember" className="mr-2 block text-sm text-gray-700">
-                  Remember me
-                </label>
-              </div>
-              <a href="#" className="text-sm text-emerald-600 hover:text-emerald-500">
-                Forgot password?
-              </a>
-            </div>
+     
 
             {/* Error Message */}
             {error && (

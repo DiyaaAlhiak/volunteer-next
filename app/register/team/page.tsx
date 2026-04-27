@@ -14,7 +14,7 @@ export default async function TeamRegistration() {
       />
       
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-[#1e293b] rounded-2xl shadow-xl p-8 border border-gray-800">
+        <div className=" rounded-2xl shadow-xl p-8 ">
            {/* هنا نستدعي النموذج اللي رح نعدله بالخطوة الجاية */}
            <TeamRegistrationForm isTeamRegistrationEnabled={isTeamRegistrationEnabled} />
         </div>
